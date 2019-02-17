@@ -41,14 +41,14 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,
                     var formattedString = formattedDate.toDateString();
 
                     return (
-                      <div>>
                         <div className="row">
-                            <div class="col m-1">
+                        <div className="row">
+                            <div className="col m-1">
                                 {comment.comment}
                             </div>
                         </div>
                         <div className="row">
-                            <div class="col m-1">
+                            <div className="col m-1">
                                 ---{comment.author}, {formattedString}
                             </div>
                         </div>
@@ -66,19 +66,15 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,
         render() {
             const { selectedDish } = this.props;
             return (
-                <div className="container">
-                    <div class="row form-group">
-                    </div>
                     <div className="row m-1">
-                        <div class="col-sm-5 m-1">
+                        <div className="col-sm-5 m-1">
                             {this.renderDish(selectedDish)}
                         </div>
-                        <div class="col-sm-5 m-1">
+                        <div className="col-sm-5 m-1">
                             <h4>Comments</h4>
                             {this.renderComments(selectedDish)}
                         </div>
                     </div>
-                </div>
             );
         }
     
