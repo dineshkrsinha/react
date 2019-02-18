@@ -37,8 +37,8 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,
                     <div>n</div>
                 );
             const commentsLayout =dish.comments.map((comment) => {
-                    var formattedDate = new Date(comment.date);
-                    var formattedString = formattedDate.toDateString();
+                    var formattedString = 
+                        new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)));
 
                     return (
                         <div className="row">
@@ -64,7 +64,11 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,
         }
     
         render() {
-            const { selectedDish } = this.props;
+            var { selectedDish } = this.props;
+            if(this.props.dish)
+            {
+                selectedDish = this.props.dish
+            }
             return (
                     <div className="row m-1">
                         <div className="col-sm-5 m-1">
