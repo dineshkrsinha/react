@@ -22,17 +22,12 @@ function RenderDish({ dish }) {
 
 }
 
-function RenderComments({ dish }) {
-
-    if (dish == null)
+function RenderComments({ comments }) {
+    if (comments == null)
         return (
             <div></div>
         );
-    if (dish.comments == null)
-        return (
-            <div>n</div>
-        );
-    const commentsLayout = dish.comments.map((comment) => {
+    const commentsLayout = comments.map((comment) => {
         var formattedString =
             new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)));
 
