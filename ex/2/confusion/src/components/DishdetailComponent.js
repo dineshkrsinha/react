@@ -11,19 +11,6 @@ import { Link } from 'react-router-dom';
 class CommentForm extends Component {
     constructor(props) {
         super(props);
-    }
-
-    render() {
-        return (
-            <div>hello123456</div>
-        );
-    }
-}
-
-
-class RenderComments extends Component {
-    constructor(props) {
-        super(props);
         this.state = {
             isModalOpen: false
         };
@@ -46,9 +33,32 @@ class RenderComments extends Component {
     }
 
     render() {
+        return (
+            <div className="container">
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
+                    <ModalBody>
 
+                    </ModalBody>
+                </Modal>
+                <Nav className="ml-auto" navbar>
+                    <NavItem>
+                        <Button outline onClick={this.toggleModal}><span className="fa fa-edit fa-lg"></span> Submit Comment</Button>
+                    </NavItem>
+                </Nav>
+            </div>
+        );
+    }
+}
+
+
+class RenderComments extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
         var comments = this.props.comments;
-
         if (comments == null)
             return (
                 <div></div>
@@ -76,21 +86,11 @@ class RenderComments extends Component {
         return (
             <div className="container">
                 {commentsLayout}
-                <CommentForm />
-                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-                    <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
-                    <ModalBody>
-
-                    </ModalBody>
-                </Modal>
-                <Nav className="ml-auto" navbar>
-                    <NavItem>
-                        <Button outline onClick={this.toggleModal}><span className="fa fa-edit fa-lg"></span> Submit Comment</Button>
-                    </NavItem>
-                </Nav>
+                <div className="mt-4 container">
+                    <CommentForm comments={this.props.comments}/>
+                    </div>
             </div>
         );
-
     }
 }
 
