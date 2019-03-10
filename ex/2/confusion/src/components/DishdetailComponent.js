@@ -8,6 +8,7 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Loading } from './LoadingComponent';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -40,25 +41,25 @@ class CommentForm extends Component {
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.handleSubmitComment}>Submit Comment</ModalHeader>
                     <ModalBody>
-                    <LocalForm onSubmit={(values) => this.handleSubmitComment(values)}>
-                    <Row className="form-group">
-                        <Label htmlFor="rating" md={10}>Rating</Label>
-                        <Col md={10}>
-                            <Control.select model=".rating" id="rating" name="rating"
-                                placeholder="Rating"
-                                className="form-control"
-                                validators={{
-                                    required
-                                }}
-                            >
-                            <option value=""></option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            </Control.select>
-                            <Errors
+                        <LocalForm onSubmit={(values) => this.handleSubmitComment(values)}>
+                            <Row className="form-group">
+                                <Label htmlFor="rating" md={10}>Rating</Label>
+                                <Col md={10}>
+                                    <Control.select model=".rating" id="rating" name="rating"
+                                        placeholder="Rating"
+                                        className="form-control"
+                                        validators={{
+                                            required
+                                        }}
+                                    >
+                                        <option value=""></option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </Control.select>
+                                    <Errors
                                         className="text-danger"
                                         model=".rating"
                                         show="touched"
@@ -66,19 +67,19 @@ class CommentForm extends Component {
                                             required: 'Required'
                                         }}
                                     />
-                        </Col>
-                    </Row>
-                    <Row className="form-group">
-                        <Label htmlFor="yourname" md={10}>Your Name</Label>
-                        <Col md={10}>
-                            <Control.text model=".yourname" id="yourname" name="yourname"
-                                placeholder="Your Name"
-                                className="form-control"
-                                validators={{
-                                    required, minLength: minLength(3), maxLength: maxLength(15)
-                                }}
-                            />
-                            <Errors
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Label htmlFor="yourname" md={10}>Your Name</Label>
+                                <Col md={10}>
+                                    <Control.text model=".yourname" id="yourname" name="yourname"
+                                        placeholder="Your Name"
+                                        className="form-control"
+                                        validators={{
+                                            required, minLength: minLength(3), maxLength: maxLength(15)
+                                        }}
+                                    />
+                                    <Errors
                                         className="text-danger"
                                         model=".yourname"
                                         show="touched"
@@ -88,25 +89,25 @@ class CommentForm extends Component {
                                             maxLength: 'Must be 15 characters or less'
                                         }}
                                     />
-                        </Col>
-                    </Row>
-                    <Row className="form-group">
-                        <Label htmlFor="comment" md={10}>Comment</Label>
-                        <Col md={10}>
-                            <Control.textarea model=".comment" id="comment" name="comment"
-                                placeholder="Comment" rows="6"
-                                className="form-control"
-                            />
-                        </Col>
-                    </Row>
-                    <Row className="form-group">
-                        <Col md={{ size: 10, offset: 2 }}>
-                            <Button type="submit" color="primary">
-                                Send Feedback
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Label htmlFor="comment" md={10}>Comment</Label>
+                                <Col md={10}>
+                                    <Control.textarea model=".comment" id="comment" name="comment"
+                                        placeholder="Comment" rows="6"
+                                        className="form-control"
+                                    />
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Col md={{ size: 10, offset: 2 }}>
+                                    <Button type="submit" color="primary">
+                                        Send Feedback
                                     </Button>
-                        </Col>
-                    </Row>
-                </LocalForm>
+                                </Col>
+                            </Row>
+                        </LocalForm>
 
                     </ModalBody>
                 </Modal>
@@ -156,9 +157,9 @@ class RenderComments extends Component {
             <div className="container">
                 {commentsLayout}
                 <div className="mt-4 container">
-                    <CommentForm comments={this.props.comments} 
-                                 dishId={this.props.dishId} 
-                                 addComment={this.props.addComment} />
+                    <CommentForm comments={this.props.comments}
+                        dishId={this.props.dishId}
+                        addComment={this.props.addComment} />
                 </div>
             </div>
         );
@@ -193,34 +194,54 @@ function RenderDish({ dish }) {
 const DishDetail = (props) => {
 
     var { selectedDish } = props;
-    if (props.dish) {
-        selectedDish = props.dish
-    }
-    return (
-        <div className="container">
-            <div className="row">
-                <Breadcrumb>
 
-                    <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
-                    <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
-                </Breadcrumb>
-                <div className="col-12">
-                    <h3>{props.dish.name}</h3>
-                    <hr />
+    if (props.dish && props.dish.dish) {
+        selectedDish = props.dish.dish
+    }
+    if (props.isLoading) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading />
                 </div>
             </div>
-            <div className="row">
-                <div className="col-12 col-md-5 m-1">
-                    <RenderDish dish={props.dish} />
-                </div>
-                <div className="col-12 col-md-5 m-1">
-                    <RenderComments comments={props.comments}
-                        addComment={props.addComment}
-                        dishId={props.dish.id} />
+        );
+    }
+    else if (props.errMess) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <h4>{props.errMess}</h4>
                 </div>
             </div>
-        </div>
-    );
+        );
+    }
+    else if (props.dish != null)
+        return (
+            <div className="container">
+                <div className="row">
+                    <Breadcrumb>
+
+                        <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                        <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+                    </Breadcrumb>
+                    <div className="col-12">
+                        <h3>{props.dish.name}</h3>
+                        <hr />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12 col-md-5 m-1">
+                        <RenderDish dish={props.dish} />
+                    </div>
+                    <div className="col-12 col-md-5 m-1">
+                        <RenderComments comments={props.comments}
+                            addComment={props.addComment}
+                            dishId={props.dish.id} />
+                    </div>
+                </div>
+            </div>
+        );
 
 }
 
