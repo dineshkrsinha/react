@@ -27,7 +27,7 @@ class CommentForm extends Component {
 
     handleSubmitComment(event) {
         this.toggleModal();
-        this.props.addComment(this.props.dishId, event.rating, event.author, event.comment);
+        this.props.postComment(this.props.dishId, event.rating, event.author, event.comment);
     }
 
     toggleModal() {
@@ -160,7 +160,7 @@ class RenderComments extends Component {
                 <div className="mt-4 container">
                     <CommentForm comments={this.props.comments}
                         dishId={this.props.dishId}
-                        addComment={this.props.addComment} />
+                        postComment={this.props.postComment} />
                 </div>
             </div>
         );
@@ -237,7 +237,7 @@ const DishDetail = (props) => {
                     </div>
                     <div className="col-12 col-md-5 m-1">
                         <RenderComments comments={props.comments}
-                            addComment={props.addComment}
+                            postComment={props.postComment}
                             dishId={props.dish.id} />
                     </div>
                 </div>
