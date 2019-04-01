@@ -2,6 +2,7 @@ import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { baseUrl } from '../shared/baseUrl';
+import { Loading } from './LoadingComponent';
 
 function About(props) {
 
@@ -33,6 +34,28 @@ function About(props) {
           </div>
         );
     });
+
+    
+    function RenderLeaders({ isLoading, errMess  }) {
+        if (isLoading) {
+            return (
+                <Loading />
+            );
+        }
+        else if (errMess) {
+            return (
+                <h4>{errMess}</h4>
+            );
+        }
+        else
+        return (
+            <div className="col-12">
+                    <Media list>
+                        {leaders}
+                    </Media>
+            </div>
+        );
+    }
 
     return (
         <div className="container">
@@ -88,11 +111,8 @@ function About(props) {
                 <div className="col-12">
                     <h2>Corporate Leadership</h2>
                 </div>
-                <div className="col-12">
-                    <Media list>
-                        {leaders}
-                    </Media>
-                </div>
+                <RenderLeaders isLoading={props.leaderLoading}
+                        errMess={props.leaderErrMess}/>
             </div>
         </div>
     );
